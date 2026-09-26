@@ -1,0 +1,81 @@
+.page-curtain{background:transparent!important;transform:none!important;transition:none!important;isolation:isolate}
+.page-curtain::after{display:none}
+.transition-panels{position:absolute;inset:0;display:grid;grid-template-columns:repeat(3,1fr);z-index:-2}
+.transition-panels i{display:block;background:var(--curtain-bg);transform:translate3d(0,102%,0);border-right:1px solid color-mix(in srgb,var(--gold) 12%,transparent);transition:transform .5s cubic-bezier(.76,0,.24,1)}
+.transition-panels i:nth-child(2){transition-delay:65ms}.transition-panels i:nth-child(3){transition-delay:130ms}
+.transition-ghost{position:absolute;left:50%;top:50%;translate:-50% -50%;font-size:clamp(160px,31vw,600px);font-weight:500;letter-spacing:-.08em;line-height:1;color:transparent;-webkit-text-stroke:1px var(--gold);opacity:0;z-index:-1;transition:opacity .4s}
+.transition-brand{width:min(780px,84vw);position:relative}
+.transition-word{font-size:clamp(56px,7vw,105px);justify-content:start;line-height:1.1}
+.transition-line{width:100%;margin:24px 0}
+.transition-destination{display:flex;align-items:baseline;gap:22px;margin-bottom:25px;overflow:hidden;color:var(--text)}
+.destination-number{font-size:13px;color:var(--gold);letter-spacing:.15em;align-self:start;margin-top:16px}
+.destination-name{font-size:clamp(48px,7.5vw,110px);letter-spacing:-.06em;line-height:1.15}
+.destination-arrow{font-size:55px;margin-left:auto;color:var(--gold)}
+.page-curtain small{text-align:left;font-size:9px;letter-spacing:.18em}
+.motion-boot .transition-panels i,.is-leaving .transition-panels i{transform:translate3d(0,0,0)}
+.motion-boot .transition-ghost,.is-leaving .transition-ghost{opacity:.09}
+.is-leaving .transition-destination{animation:destination-enter .55s var(--motion-ease) .2s both}
+.motion-boot.motion-uncover .transition-panels i{transform:translate3d(0,-102%,0);transition-duration:.8s}
+.motion-boot.motion-uncover .transition-brand{transform:translateY(-35px);opacity:0;transition:opacity .25s,transform .5s var(--motion-ease)}
+.motion-boot.motion-uncover .transition-ghost{opacity:0;transition:opacity .3s}
+.is-leaving main{transform:translateY(-20px) scale(.985);opacity:.45;transition:transform .75s var(--motion-ease),opacity .6s}
+.motion-uncover main{animation:chapter-enter 1.1s var(--motion-ease) both;transform-origin:center top}
+@keyframes destination-enter{from{opacity:0;transform:translateY(45px)}to{opacity:1;transform:none}}
+@keyframes chapter-enter{from{transform:translateY(45px) scale(1.025)}to{transform:none}}
+/* Type rises from masks, keeping text selectable and headings semantic. */
+.word-mask{display:inline-block;overflow:clip;vertical-align:bottom;padding:.1em .05em .18em;margin:-.1em -.05em -.18em;line-height:inherit}
+.word-inner{display:inline-block;vertical-align:bottom}
+.experience-ready .word-title:not(.is-written) .word-inner{transform:translate3d(0,115%,0) rotate(5deg);opacity:0}
+.experience-ready .word-title.is-written .word-inner{animation:word-rise .95s var(--motion-ease) both;animation-delay:calc(var(--word)*65ms)}
+.experience-ready h1.word-title.is-written .word-inner{animation-delay:calc(.2s + var(--word)*65ms)}
+@keyframes word-rise{from{transform:translate3d(0,115%,0) rotate(5deg);opacity:0}to{transform:translate3d(0,0,0) rotate(0);opacity:1}}
+/* Navigation feels continuous: one indicator travels between destinations. */
+.nav-wrap nav{position:relative;isolation:isolate}
+.nav-wrap nav a{z-index:1}
+.nav-wrap nav a::after{display:none}
+.nav-indicator{position:absolute;left:0;top:0;z-index:0;border-radius:3px;background:var(--bg);opacity:.65;pointer-events:none;transition:transform .55s var(--motion-ease),width .45s var(--motion-ease)}
+.reading-progress{position:absolute;left:0;right:0;bottom:-1px;height:2px;background:var(--gold);transform:scaleX(0);transform-origin:left;pointer-events:none}
+.product-tabs{position:sticky;top:96px;z-index:15;background:var(--bg);box-shadow:0 10px 25px #0000000a}
+.product-tabs a{overflow:hidden;transition:color .35s,background .45s}
+.product-tabs a::after{content:'';position:absolute;left:0;right:0;bottom:0;height:3px;background:var(--gold);transform:scaleX(0);transform-origin:left;transition:transform .6s var(--motion-ease)}
+.product-tabs a[aria-current=location]{background:var(--surface);color:var(--gold)}
+.product-tabs a[aria-current=location]::after{transform:scaleX(1)}
+/* Different depths respond to scrolling; text itself remains stable. */
+.scroll-scene{--scroll-shift:0px}
+.detail-visual img,.identity-card img{translate:0 var(--scroll-shift);transition:translate .16s linear}
+.hero-model{translate:0 calc(var(--scroll-shift)*-1.3)}
+.film-frame{border-color:color-mix(in srgb,var(--gold) 30%,transparent)}
+.depth-surface{--tilt-x:0deg;--tilt-y:0deg;--shine-x:50%;--shine-y:50%;isolation:isolate}
+.product-image.depth-surface,.portrait-button.depth-surface{transform:perspective(850px) rotateX(var(--tilt-x)) rotateY(var(--tilt-y));transition:transform .55s var(--motion-ease),box-shadow .55s}
+.depth-surface::after{content:'';position:absolute;inset:0;pointer-events:none;z-index:2;opacity:0;background:radial-gradient(circle at var(--shine-x) var(--shine-y),#fff2,transparent 60%);transition:opacity .45s}
+.depth-surface.is-pointed::after{opacity:1}
+.product-image.is-pointed,.portrait-button.is-pointed{box-shadow:0 22px 40px #00000020}
+.hero-visual.is-pointed .hero-glasses{transform:perspective(900px) rotateX(var(--tilt-x)) rotateY(var(--tilt-y)) rotate(-5deg) scale(1.04)}
+.button,.nav-contact,.next-arrow{transition:translate .5s var(--motion-ease),transform .65s var(--motion-ease),background .35s,box-shadow .45s}
+.principles article,.timeline article,.values-grid article{position:relative}
+.principles article::after,.timeline article::after,.values-grid article::after{content:'';position:absolute;left:0;right:0;bottom:0;height:1px;background:var(--gold);opacity:.5;transform:scaleX(0);transform-origin:left;transition:transform 1.2s var(--motion-ease) .2s}
+.principles article.is-visible::after,.timeline article.is-visible::after,.values-grid article.is-visible::after{transform:scaleX(1)}
+.next-page{perspective:900px}
+.next-page::before{content:'';position:absolute;width:270px;height:270px;border:1px solid #e4ce5f2c;border-radius:50%;right:-80px;top:50%;transform:translateY(-50%) scale(.65);opacity:0;transition:transform .9s var(--motion-ease),opacity .6s}
+.next-page:hover::before{transform:translateY(-50%) scale(1.35);opacity:1}
+.faq-list summary::after{transition:rotate .35s var(--motion-ease)}
+@media(max-width:760px){
+ .nav-wrap nav{position:absolute}.nav-indicator{display:none}.nav-wrap nav a[aria-current=page]{color:var(--gold)}
+ .product-tabs{top:76px}.transition-brand{width:84vw}.destination-name{font-size:clamp(39px,11vw,64px)}.destination-number{margin-top:8px;font-size:10px}.destination-arrow{font-size:32px}.transition-destination{gap:12px}.page-curtain small{font-size:7px;line-height:1.7;letter-spacing:.14em}.transition-ghost{font-size:46vw}
+ .detail-visual img,.identity-card img{translate:0 calc(var(--scroll-shift)*.5)}
+ .experience-ready .word-title.is-written .word-inner{animation-duration:.85s}
+}
+:where(html[data-motion=reduce]) .page-curtain{display:none!important}:where(html[data-motion=reduce]) .is-leaving main{transform:none;opacity:1}:where(html[data-motion=reduce]) .experience-ready .word-title .word-inner{transform:none!important;opacity:1!important;animation:none!important}:where(html[data-motion=reduce]) .depth-surface,:where(html[data-motion=reduce]) .product-image.depth-surface,:where(html[data-motion=reduce]) .portrait-button.depth-surface{transform:none!important}:where(html[data-motion=reduce]) .detail-visual img,:where(html[data-motion=reduce]) .identity-card img,:where(html[data-motion=reduce]) .hero-model,:where(html[data-motion=reduce]) .button,:where(html[data-motion=reduce]) .nav-contact,:where(html[data-motion=reduce]) .next-arrow{translate:none!important}:where(html[data-motion=reduce]) .nav-indicator,:where(html[data-motion=reduce]) .reading-progress{transition:none!important}
+
+
+/* Motion remains a visitor choice, even when the OS requests reduced motion. */
+.motion-toggle{display:grid;place-items:center;width:38px;height:38px;flex-shrink:0;padding:8px;border:1px solid var(--header-line);border-radius:50%;background:var(--bg);color:var(--gold)}
+.motion-toggle svg{width:19px;height:19px;fill:none;stroke:currentColor;stroke-width:1.6}
+.motion-toggle:hover{background:var(--surface)}
+.motion-toggle .motion-play{display:none}
+html[data-motion=reduce] .motion-toggle .motion-play{display:block}
+html[data-motion=reduce] .motion-toggle .motion-pause{display:none}
+.motion-note{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-top:14px;font-size:11px;color:var(--muted)}
+.motion-note button{border:0;border-bottom:1px solid var(--gold);padding:0;background:none;color:var(--gold);font-size:inherit}
+.build-label{font-size:10px;letter-spacing:.08em;white-space:nowrap}
+@media(max-width:760px){.header-actions{gap:8px}.motion-toggle{width:34px;height:34px;padding:6px}}
